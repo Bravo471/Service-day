@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import {
   Activity,
   ApiResponse,
@@ -25,7 +26,7 @@ export class MockApiInterceptor implements HttpInterceptor {
   private store: MockDataStore | null = null;
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (!req.url.startsWith('/api/')) {
+    if (!req.url.startsWith('/api/') || !environment.useMockApi) {
       return next.handle(req);
     }
 
