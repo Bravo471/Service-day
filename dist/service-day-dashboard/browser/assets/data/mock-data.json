@@ -1,0 +1,146 @@
+{
+  "activities": [
+    {
+      "id": "act-001",
+      "ngoName": "Green Earth Foundation",
+      "serviceType": "Environmental Cleanup",
+      "description": "Beach cleanup and recycling awareness at East Coast Park.",
+      "location": "East Coast Park, Area B",
+      "date": "2026-07-15",
+      "time": "09:00",
+      "maxSlots": 25,
+      "slotsTaken": 18,
+      "cutOffDateTime": "2026-07-12T17:00:00",
+      "status": "approved",
+      "qrCodeToken": "QR-GEF-20260715"
+    },
+    {
+      "id": "act-002",
+      "ngoName": "Food Bank Singapore",
+      "serviceType": "Food Distribution",
+      "description": "Pack and distribute food parcels to low-income families.",
+      "location": "Jurong Warehouse, Level 2",
+      "date": "2026-07-15",
+      "time": "10:30",
+      "maxSlots": 20,
+      "slotsTaken": 20,
+      "cutOffDateTime": "2026-07-10T17:00:00",
+      "status": "approved",
+      "qrCodeToken": "QR-FBS-20260715"
+    },
+    {
+      "id": "act-003",
+      "ngoName": "Youth Mentoring Network",
+      "serviceType": "Education Support",
+      "description": "Tutor secondary school students in mathematics and science.",
+      "location": "Community Hub, Tampines",
+      "date": "2026-07-15",
+      "time": "14:00",
+      "maxSlots": 15,
+      "slotsTaken": 8,
+      "cutOffDateTime": "2026-07-13T17:00:00",
+      "status": "approved",
+      "qrCodeToken": "QR-YMN-20260715"
+    },
+    {
+      "id": "act-004",
+      "ngoName": "Animal Welfare Society",
+      "serviceType": "Animal Care",
+      "description": "Assist with shelter maintenance and animal socialisation.",
+      "location": "AWL Shelter, Sungei Tengah",
+      "date": "2026-07-15",
+      "time": "08:30",
+      "maxSlots": 12,
+      "slotsTaken": 5,
+      "cutOffDateTime": "2026-07-14T17:00:00",
+      "status": "approved",
+      "qrCodeToken": "QR-AWS-20260715"
+    },
+    {
+      "id": "act-005",
+      "ngoName": "ElderCare Connect",
+      "serviceType": "Elderly Support",
+      "description": "Visit elderly residents and assist with basic household tasks.",
+      "location": "Bukit Merah Senior Centre",
+      "date": "2026-07-15",
+      "time": "11:00",
+      "maxSlots": 18,
+      "slotsTaken": 11,
+      "cutOffDateTime": "2026-07-13T17:00:00",
+      "status": "approved",
+      "qrCodeToken": "QR-ECC-20260715"
+    }
+  ],
+  "users": [
+    {
+      "id": "emp-001",
+      "name": "Sarah Tan",
+      "email": "sarah.tan@company.com",
+      "department": "Marketing",
+      "role": "employee"
+    },
+    {
+      "id": "emp-002",
+      "name": "David Lim",
+      "email": "david.lim@company.com",
+      "department": "Engineering",
+      "role": "employee"
+    },
+    {
+      "id": "emp-003",
+      "name": "Priya Sharma",
+      "email": "priya.sharma@company.com",
+      "department": "Finance",
+      "role": "employee"
+    },
+    {
+      "id": "admin-001",
+      "name": "Admin User",
+      "email": "admin@company.com",
+      "department": "HR",
+      "role": "admin"
+    }
+  ],
+  "registrations": [
+    {
+      "id": "reg-001",
+      "employeeId": "emp-001",
+      "activityId": "act-001",
+      "registeredAt": "2026-06-20T10:30:00",
+      "status": "confirmed",
+      "checkedIn": false,
+      "checkInTime": null
+    },
+    {
+      "id": "reg-002",
+      "employeeId": "emp-002",
+      "activityId": "act-003",
+      "registeredAt": "2026-06-22T14:15:00",
+      "status": "confirmed",
+      "checkedIn": false,
+      "checkInTime": null
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-001",
+      "recipientId": "emp-001",
+      "type": "registration",
+      "message": "You have successfully registered for Green Earth Foundation - Environmental Cleanup.",
+      "createdAt": "2026-06-20T10:30:00",
+      "read": false
+    },
+    {
+      "id": "notif-002",
+      "recipientId": "all",
+      "type": "reminder",
+      "message": "Service Day is in 1 week! Please confirm your registration or choose an activity.",
+      "createdAt": "2026-07-08T09:00:00",
+      "read": false
+    }
+  ],
+  "reminderSchedule": {
+    "intervals": [7, 3, 1],
+    "enabled": true
+  }
+}

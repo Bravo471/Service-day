@@ -1,0 +1,32 @@
+<section class="login-page">
+  <div class="login-card">
+    <p class="eyebrow">Corporate CSR Platform</p>
+    <h2>Service Day Dashboard</h2>
+    <p class="intro">
+      Sign in as an administrator or employee to manage NGO activities, register for Service Day,
+      and monitor participation in real time.
+    </p>
+
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+    <form *ngIf="!loading" (ngSubmit)="login()" class="login-form">
+      <label for="userSelect">Select demo account</label>
+      <select id="userSelect" [(ngModel)]="selectedUserId" name="selectedUserId" required>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }} ({{ user.role | titlecase }}) - {{ user.department }}
+        </option>
+      </select>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+
+    <div class="demo-info">
+      <h3>Demo Accounts</h3>
+      <ul>
+        <li><strong>Admin:</strong> Admin User (HR)</li>
+        <li><strong>Employees:</strong> Sarah Tan, David Lim, Priya Sharma</li>
+      </ul>
+    </div>
+  </div>
+</section>

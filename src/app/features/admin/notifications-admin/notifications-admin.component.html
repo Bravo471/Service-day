@@ -1,0 +1,52 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Use Case 5</p>
+      <h2>Notifications & Reminders</h2>
+      <p>Configure automated reminder intervals and broadcast urgent updates to employees.</p>
+    </div>
+  </div>
+
+  <div class="alert success" *ngIf="message">{{ message }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="layout-grid">
+    <article class="card">
+      <h3>Reminder Schedule</h3>
+      <p>Send reminders at multiple intervals before Service Day (e.g., 1 week, 3 days, 1 day).</p>
+
+      <label class="toggle-row">
+        <input type="checkbox" [(ngModel)]="schedule.enabled" />
+        Enable automated reminders
+      </label>
+
+      <div class="interval-list">
+        <label *ngFor="let interval of schedule.intervals; let i = index">
+          Interval {{ i + 1 }} (days before)
+          <input type="number" min="1" [(ngModel)]="schedule.intervals[i]" />
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" (click)="saveSchedule()">Save Schedule</button>
+        <button type="button" class="btn btn-secondary" (click)="triggerScheduledReminders()">
+          Simulate Reminders
+        </button>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Broadcast Message</h3>
+      <p>Highlight urgent updates such as last available slots or activity changes.</p>
+
+      <label class="full-width">
+        Message
+        <textarea rows="5" [(ngModel)]="broadcastMessage" placeholder="Enter broadcast message..."></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" (click)="sendBroadcast()">Send Broadcast</button>
+      </div>
+    </article>
+  </div>
+</section>

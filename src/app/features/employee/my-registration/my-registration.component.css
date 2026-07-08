@@ -1,0 +1,22 @@
+.meta-list {
+  padding-left: 1.1rem;
+  color: #475569;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.locked-note {
+  margin-top: 1rem;
+  color: #92400e;
+}

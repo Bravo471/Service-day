@@ -1,0 +1,63 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Use Case 6</p>
+      <h2>QR Code Check-In Management</h2>
+      <p>Generate unique QR codes for each NGO activity and monitor live attendance.</p>
+    </div>
+  </div>
+
+  <div class="alert success" *ngIf="message">{{ message }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <div class="layout-grid" *ngIf="!loading">
+    <article class="card">
+      <h3>Generate QR Code</h3>
+      <label>
+        Select Activity
+        <select [(ngModel)]="selectedActivityId">
+          <option *ngFor="let activity of activities" [value]="activity.id">
+            {{ activity.ngoName }} - {{ activity.date }}
+          </option>
+        </select>
+      </label>
+
+      <div class="qr-panel" *ngIf="selectedActivity as activity">
+        <qrcode
+          [qrdata]="activity.qrCodeToken"
+          [width]="220"
+          [errorCorrectionLevel]="'M'"
+        ></qrcode>
+        <p><strong>Token:</strong> {{ activity.qrCodeToken }}</p>
+        <p>{{ activity.location }}</p>
+        <button type="button" class="btn btn-primary" (click)="regenerateQr()">Regenerate QR Code</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Live Check-In Report</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Employee</th>
+              <th>Check-In Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let activity of activities">
+              <tr *ngFor="let registration of getCheckInsForActivity(activity.id)">
+                <td>{{ activity.ngoName }}</td>
+                <td>{{ getEmployeeName(registration.employeeId) }}</td>
+                <td>{{ registration.checkInTime | date: 'medium' }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>

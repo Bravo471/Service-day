@@ -1,0 +1,60 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Use Cases 2 & 3</p>
+      <h2>Service Day Opportunities</h2>
+      <p>View approved NGO activities, available slots, and register before the cut-off deadline.</p>
+    </div>
+  </div>
+
+  <div class="alert success" *ngIf="message">{{ message }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <div class="layout-grid" *ngIf="!loading">
+    <div class="cards-grid">
+      <article class="card activity-card" *ngFor="let activity of activities">
+        <div class="card-top">
+          <div>
+            <h3>{{ activity.ngoName }}</h3>
+            <p>{{ activity.serviceType }}</p>
+          </div>
+          <app-status-badge
+            [label]="getAvailabilityLabel(activity)"
+            [variant]="getAvailabilityVariant(activity)"
+          ></app-status-badge>
+        </div>
+
+        <p>{{ activity.description }}</p>
+        <ul class="meta-list">
+          <li><strong>Date:</strong> {{ activity.date }}</li>
+          <li><strong>Time:</strong> {{ activity.time }}</li>
+          <li><strong>Location:</strong> {{ activity.location }}</li>
+          <li><strong>Cut-off:</strong> {{ activity.cutOffDateTime | date: 'medium' }}</li>
+        </ul>
+
+        <app-slot-meter [taken]="activity.slotsTaken" [max]="activity.maxSlots"></app-slot-meter>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!!currentRegistration || isFull(activity) || isCutOffPassed(activity)"
+          (click)="register(activity)"
+        >
+          Register
+        </button>
+      </article>
+    </div>
+
+    <aside class="card notifications-panel">
+      <h3>Recent Notifications</h3>
+      <div class="notification-item" *ngFor="let notification of notifications">
+        <app-status-badge [label]="notification.type | titlecase" variant="info"></app-status-badge>
+        <p>{{ notification.message }}</p>
+        <small>{{ notification.createdAt | date: 'medium' }}</small>
+      </div>
+      <p *ngIf="notifications.length === 0">No notifications yet.</p>
+    </aside>
+  </div>
+</section>

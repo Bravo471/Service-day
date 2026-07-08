@@ -1,0 +1,84 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Use Case 4</p>
+      <h2>Monitor Participation & Slot Utilisation</h2>
+      <p>Track slots offered, registrations, check-ins, and employee distribution across NGOs.</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="btn btn-secondary" (click)="refreshData()">Refresh</button>
+      <button type="button" class="btn btn-primary" (click)="sendParticipationReminder()">Send Reminder</button>
+    </div>
+  </div>
+
+  <div class="alert success" *ngIf="message">{{ message }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <ng-container *ngIf="!loading && stats">
+    <div class="stats-grid">
+      <article class="stat-card">
+        <span>Total Slots Offered</span>
+        <strong>{{ stats.totalSlotsOffered }}</strong>
+      </article>
+      <article class="stat-card">
+        <span>Slots Taken</span>
+        <strong>{{ stats.totalSlotsTaken }}</strong>
+      </article>
+      <article class="stat-card">
+        <span>Remaining Slots</span>
+        <strong>{{ stats.totalSlotsRemaining }}</strong>
+      </article>
+      <article class="stat-card">
+        <span>Check-ins</span>
+        <strong>{{ stats.totalCheckIns }}</strong>
+      </article>
+    </div>
+
+    <div class="layout-grid">
+      <article class="card">
+        <h3>Activity Utilisation</h3>
+        <div class="breakdown-list">
+          <div class="breakdown-item" *ngFor="let item of stats.activityBreakdown">
+            <div class="breakdown-head">
+              <strong>{{ item.ngoName }}</strong>
+              <span>{{ item.utilizationPercent }}%</span>
+            </div>
+            <app-slot-meter [taken]="item.slotsTaken" [max]="item.maxSlots"></app-slot-meter>
+            <p>{{ item.slotsRemaining }} slots remaining</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Employee Registrations</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Activity</th>
+                <th>Registered</th>
+                <th>Check-in</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let registration of registrations">
+                <td>{{ getEmployeeName(registration.employeeId) }}</td>
+                <td>{{ getActivityName(registration.activityId) }}</td>
+                <td>{{ registration.registeredAt | date: 'medium' }}</td>
+                <td>
+                  <app-status-badge
+                    [label]="registration.checkedIn ? 'Checked In' : 'Pending'"
+                    [variant]="registration.checkedIn ? 'success' : 'warning'"
+                  ></app-status-badge>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+  </ng-container>
+</section>

@@ -1,0 +1,63 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Use Case 3</p>
+      <h2>My Registration</h2>
+      <p>View, change, or cancel your Service Day registration before the cut-off deadline.</p>
+    </div>
+  </div>
+
+  <div class="alert success" *ngIf="message">{{ message }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <article class="card" *ngIf="!loading && registration && activity; else emptyState">
+    <h3>{{ activity.ngoName }}</h3>
+    <p>{{ activity.serviceType }} · {{ activity.location }}</p>
+    <ul class="meta-list">
+      <li><strong>Date:</strong> {{ activity.date }}</li>
+      <li><strong>Time:</strong> {{ activity.time }}</li>
+      <li><strong>Registered:</strong> {{ registration.registeredAt | date: 'medium' }}</li>
+      <li><strong>Cut-off:</strong> {{ activity.cutOffDateTime | date: 'medium' }}</li>
+      <li>
+        <strong>Check-in:</strong>
+        {{ registration.checkedIn ? (registration.checkInTime | date: 'medium') : 'Not checked in yet' }}
+      </li>
+    </ul>
+
+    <div class="actions" *ngIf="canModify(); else lockedState">
+      <label>
+        Change to another activity
+        <select [(ngModel)]="selectedActivityId">
+          <option value="">Select activity</option>
+          <option
+            *ngFor="let item of activities"
+            [value]="item.id"
+            [disabled]="item.id === activity.id || item.slotsTaken >= item.maxSlots"
+          >
+            {{ item.ngoName }} ({{ item.maxSlots - item.slotsTaken }} slots left)
+          </option>
+        </select>
+      </label>
+      <div class="button-row">
+        <button type="button" class="btn btn-primary" [disabled]="!selectedActivityId" (click)="changeRegistration()">
+          Change Activity
+        </button>
+        <button type="button" class="btn btn-danger" (click)="cancelRegistration()">Cancel Registration</button>
+      </div>
+    </div>
+  </article>
+
+  <ng-template #emptyState>
+    <article class="card" *ngIf="!loading">
+      <h3>No active registration</h3>
+      <p>Visit the Opportunities page to register for a Service Day activity.</p>
+      <a routerLink="/employee/opportunities" class="btn btn-primary">Browse Opportunities</a>
+    </article>
+  </ng-template>
+
+  <ng-template #lockedState>
+    <p class="locked-note">Registration changes are locked after the cut-off date/time.</p>
+  </ng-template>
+</section>

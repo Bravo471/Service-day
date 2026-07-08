@@ -1,0 +1,98 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Use Case 1</p>
+      <h2>Manage NGO Availability</h2>
+      <p>Add, update, or remove approved Service Day NGO activities with real-time slot visibility.</p>
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="startCreate()">New Activity</button>
+  </div>
+
+  <div class="alert success" *ngIf="message">{{ message }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="layout-grid">
+    <article class="card form-card">
+      <h3>{{ editingId ? 'Edit NGO Activity' : 'Add NGO Activity' }}</h3>
+      <form (ngSubmit)="saveActivity()" class="form-grid">
+        <label>
+          NGO Name
+          <input [(ngModel)]="formModel.ngoName" name="ngoName" required />
+        </label>
+        <label>
+          Service Type
+          <input [(ngModel)]="formModel.serviceType" name="serviceType" required />
+        </label>
+        <label class="full-width">
+          Description
+          <textarea [(ngModel)]="formModel.description" name="description" rows="3" required></textarea>
+        </label>
+        <label>
+          Location
+          <input [(ngModel)]="formModel.location" name="location" required />
+        </label>
+        <label>
+          Date
+          <input type="date" [(ngModel)]="formModel.date" name="date" required />
+        </label>
+        <label>
+          Time
+          <input type="time" [(ngModel)]="formModel.time" name="time" required />
+        </label>
+        <label>
+          Max Employees
+          <input type="number" min="1" [(ngModel)]="formModel.maxSlots" name="maxSlots" required />
+        </label>
+        <label>
+          Registration Cut-off
+          <input type="datetime-local" [(ngModel)]="formModel.cutOffDateTime" name="cutOffDateTime" required />
+        </label>
+        <label>
+          Status
+          <select [(ngModel)]="formModel.status" name="status">
+            <option value="approved">Approved</option>
+            <option value="pending">Pending</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </label>
+        <div class="full-width form-actions">
+          <button type="submit" class="btn btn-primary">{{ editingId ? 'Update Activity' : 'Create Activity' }}</button>
+        </div>
+      </form>
+    </article>
+
+    <article class="card">
+      <h3>Registered NGOs</h3>
+      <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+      <div class="table-wrap" *ngIf="!loading">
+        <table>
+          <thead>
+            <tr>
+              <th>NGO</th>
+              <th>Schedule</th>
+              <th>Slots</th>
+              <th>Cut-off</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let activity of activities">
+              <td>
+                <strong>{{ activity.ngoName }}</strong>
+                <p>{{ activity.serviceType }}</p>
+              </td>
+              <td>{{ activity.date }} · {{ activity.time }}<br />{{ activity.location }}</td>
+              <td><app-slot-meter [taken]="activity.slotsTaken" [max]="activity.maxSlots"></app-slot-meter></td>
+              <td>{{ activity.cutOffDateTime | date: 'medium' }}</td>
+              <td class="actions">
+                <button type="button" class="btn btn-secondary" (click)="startEdit(activity)">Edit</button>
+                <button type="button" class="btn btn-danger" (click)="deleteActivity(activity)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>

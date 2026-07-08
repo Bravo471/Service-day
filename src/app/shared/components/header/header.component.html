@@ -1,0 +1,27 @@
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-icon">SD</span>
+    <div>
+      <p class="brand-label">Corporate CSR Platform</p>
+      <h1>{{ title }}</h1>
+    </div>
+  </div>
+
+  <nav class="nav-links" *ngIf="authService.isLoggedIn">
+    <a routerLink="/employee/opportunities" *ngIf="authService.isEmployee">Opportunities</a>
+    <a routerLink="/employee/my-registration" *ngIf="authService.isEmployee">My Registration</a>
+    <a routerLink="/employee/check-in" *ngIf="authService.isEmployee">Check-In</a>
+    <a routerLink="/admin/activities" *ngIf="authService.isAdmin">Manage NGOs</a>
+    <a routerLink="/admin/monitoring" *ngIf="authService.isAdmin">Monitoring</a>
+    <a routerLink="/admin/notifications" *ngIf="authService.isAdmin">Notifications</a>
+    <a routerLink="/admin/qr-codes" *ngIf="authService.isAdmin">QR Codes</a>
+  </nav>
+
+  <div class="user-panel" *ngIf="authService.currentUser as user">
+    <div class="user-meta">
+      <strong>{{ user.name }}</strong>
+      <span>{{ user.role | titlecase }} · {{ user.department }}</span>
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="logout()">Logout</button>
+  </div>
+</header>
