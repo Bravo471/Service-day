@@ -1,0 +1,9 @@
+{
+  "name": "service-day-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple backend for the Service Day Angular app",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
